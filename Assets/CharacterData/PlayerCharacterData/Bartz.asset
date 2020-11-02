@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b72070ed70203f489286bc96b8f0e48, type: 3}
+  m_Name: Bartz
+  m_EditorClassIdentifier: 
+  Name: Bartz
+  Strength: 10
+  Agility: 50
+  Stamina: 5
+  Magic: 1
+  MAX_HP: 10
+  MAX_MP: 10
+  HP: 19
+  MP: 10
+  ATP: 371.9336
+  backRow: 0
+  sprite: {fileID: 21300000, guid: 8229ef2e1a5227b4caee857cf4b5c3dc, type: 3}
+  pos: {x: 3.5, y: 1.8}
+  isEnemy: 0
+  WHITE_LEVEL: 0
+  BLACK_LEVEL: 0
+  KNIGHT_LEVEL: 0
+  MONK_LEVEL: 0
+  main_job: 0
+  sub_job: 0
