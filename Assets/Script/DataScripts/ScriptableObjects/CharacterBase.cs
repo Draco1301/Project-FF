@@ -17,7 +17,7 @@ public class CharacterBase : ScriptableObject
     public int HP;
     public int MP;
     
-    public float ATP = 0;
+    public float ATB = 0;
     
     public bool backRow;
     public Sprite sprite;

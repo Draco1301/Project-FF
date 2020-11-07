@@ -8,18 +8,17 @@ public class EA_Bite : MonoBehaviour, IEnemyAttack
         Destroy(this);
     }
 
-    public void StartAction(PlayerBase player, CharacterBase target) {
-        Debug.Log(player.name + " Attacked " + target.name);
-        target.HP -= player.Strength - target.Strength;
+    public IEnumerator StartAction(EnemyInstance player, CharacterInstance target) {
+        target.HP -= player.Strength;
+        target.HP = Mathf.Clamp(target.HP, 0, target.MAX_HP);
         
+        BattleMessage.setMessage(player.Name + " Attacked " + target.Name);
         BattleSystemManager.AttackInProgress = true;
-        
-        //animation
-        //calc
-        //display damage
-        //display damage
-        //animation
-        
+
+        yield return new WaitForSeconds(1f);
+
         BattleSystemManager.AttackInProgress = false;
+        BattleMessage.closeMessage();
+        DestoryThis();
     }
 }

@@ -11,13 +11,13 @@ public class ActionMenu : MonoBehaviour
     [SerializeField] Button Job;
     [SerializeField] Button Ability;
     [SerializeField] Button Item;
-    private PlayerBase player;
-    private CharacterBase target;
+    private PlayerInstance player;
+    private CharacterInstance target;
     private IPlayerAttack playerAttack;
     private Coroutine action;
     [SerializeField] TargetMenu targetMenu;
 
-    public void setUp(PlayerBase p) {
+    public void setUp(PlayerInstance p) {
         player = p;
         showMenu();
 
@@ -43,14 +43,18 @@ public class ActionMenu : MonoBehaviour
     }
 
     private void Update() {
-        if (playerAttack != null && Input.GetKeyDown(KeyCode.Q)) {
+        if (player != null && player.HP == 0) {
+            SkipAction();
+        } else if (playerAttack != null && Input.GetKeyDown(KeyCode.Q)) {
             StopCoroutine(action);
             playerAttack.DestoryThis();
             targetMenu.turnOff();
+            setEnableMenu(true);
         }
     }
 
     private void StartAction() {
+        setEnableMenu(false);
         action = StartCoroutine(WaitForTarget());
         targetMenu.SetUp(BattleSystemManager.getEnemies(), BattleSystemManager.getPlayers());
     }
@@ -62,19 +66,28 @@ public class ActionMenu : MonoBehaviour
         performAction();
     }
 
-    public void setTarget(CharacterBase t) {
+    public void setTarget(CharacterInstance t) {
         target = t;
     }
 
     private void performAction() {
         StartCoroutine(playerAttack.StartAction(player, target));
         target = null;
-        player.ATP = 0;
+        player.ATB = 0;
         hideMenu();
     }
 
+    private void SkipAction() {
+        target = null;
+        player.ATB = 0;
+        hideMenu();
+        BattleSystemManager.endAttack();
+    }
+
     private void hideMenu() {
-        this.GetComponent<Image>().enabled = true;
+        this.GetComponent<Image>().enabled = false;
+
+        Fight.onClick.RemoveAllListeners();
         Fight.gameObject.SetActive(false);
 
         Job.onClick.RemoveAllListeners();
@@ -88,6 +101,7 @@ public class ActionMenu : MonoBehaviour
     }
 
     private void showMenu() {
+        setEnableMenu(true);
         this.GetComponent<Image>().enabled = true;
         Fight.gameObject.SetActive(true);
 
@@ -96,5 +110,12 @@ public class ActionMenu : MonoBehaviour
         Ability.gameObject.SetActive(true);
 
         Item.gameObject.SetActive(true);
+    }
+
+    private void setEnableMenu(bool b) {
+        Fight.interactable = b;
+        Job.interactable = b;
+        Ability.interactable = b;
+        Item.interactable = b;
     }
 }

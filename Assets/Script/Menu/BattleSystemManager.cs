@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,9 +9,9 @@ public class BattleSystemManager : MonoBehaviour
     public static BattleSystemManager instance;
     public static bool AttackInProgress;
 
-    [SerializeField] EnemyBase[] Enemies;
-    [SerializeField] PlayerBase[] Players;
-    private Queue<PlayerBase> playerOrder = new Queue<PlayerBase>();
+    List<EnemyInstance> Enemies;
+    List<PlayerInstance> Players;
+    private Queue<PlayerInstance> playerOrder = new Queue<PlayerInstance>();
     [SerializeField] ActionMenu actionMenu;
     private bool readyForAction = true;
 
@@ -29,7 +30,7 @@ public class BattleSystemManager : MonoBehaviour
     }
 
     private void Start() {
-        pdisplays = new PlayerDisplay[Players.Length];
+        pdisplays = new PlayerDisplay[Players.Count];
         for (int i=0;i < pdisplays.Length;i++) {
             pdisplays[i] = Instantiate(pdisplayPrefab, Pnl_Main.transform);
             pdisplays[i].setUp(Players[i]);
@@ -39,34 +40,41 @@ public class BattleSystemManager : MonoBehaviour
 
     private void Update() {
         if (!AttackInProgress) {
-            foreach (EnemyBase e in Enemies) {
-                e.ATP += Time.deltaTime * e.Agility / 100.00f;
-                if (e.ATP > 1) {
-                    //Attack a player
-                    //call enemy controller
-                    //enemy controller adds attack based enemy
+            for (int i = 0; i < Enemies.Count; i++) {
+                Enemies[i].ATB += Time.deltaTime * Enemies[i].Agility / 100.00f;
+                if (Enemies[i].ATB > 1) {
+                    Enemies[i].GetComponent<IEnemyController>().StartAttack();
+                    Enemies[i].ATB = 0;
                 }
             }
-            int count = 0;
-            foreach (PlayerBase p in Players) {
-                p.ATP += Time.deltaTime * p.Agility / 100.00f;
-                if (p.ATP > 1 && !playerOrder.Contains(p)) {
-                    playerOrder.Enqueue(p);
+            for (int i = 0; i < Players.Count; i++) {
+                if (Players[i].HP > 0) {
+                    Players[i].ATB += Time.deltaTime * Players[i].Agility / 100.00f;
+                    if (Players[i].ATB > 1 && !playerOrder.Contains(Players[i])) {
+                        playerOrder.Enqueue(Players[i]);
+                    }
+                } else {
+                    Players[i].ATB = 0;
                 }
-                pdisplays[count].setATB(p.ATP);
-                count++;
             }
             if (playerOrder.Count > 0 && readyForAction) {
                 startAttack();
             }
         }
+        for (int i = 0; i < Enemies.Count; i++) {
+            if (Enemies[i].HP <= 0 && !AttackInProgress ) {
+                Destroy(Enemies[i].gameObject);
+                Enemies.RemoveAt(i);
+                i--;
+            }
+        }
     }
 
-    public static EnemyBase[] getEnemies() {
+    public static List<EnemyInstance> getEnemies() {
         return instance.Enemies;
     }
 
-    public static PlayerBase[] getPlayers() {
+    public static List<PlayerInstance> getPlayers() {
         return instance.Players;
     }
 
@@ -75,14 +83,23 @@ public class BattleSystemManager : MonoBehaviour
     }
 
     private void startAttack() {
-        readyForAction = false;
-        actionMenu.gameObject.SetActive(true);
-        actionMenu.setUp(playerOrder.Peek());
+        if (playerOrder.Peek().HP > 0) {
+            readyForAction = false;
+            actionMenu.gameObject.SetActive(true);
+            actionMenu.setUp(playerOrder.Peek());
+        } else {
+            playerOrder.Dequeue();
+        }
     }
 
     public static void endAttack() {
         BattleSystemManager.AttackInProgress = false;
         BattleSystemManager.setReadyForAction(true);
         instance.playerOrder.Dequeue();
+    }
+
+    public static void setCharacters(EnemyInstance[] e, PlayerInstance[] p) {
+        instance.Enemies = e.ToList<EnemyInstance>();
+        instance.Players = p.ToList<PlayerInstance>();
     }
 }

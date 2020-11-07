@@ -6,6 +6,6 @@ using UnityEngine;
 public interface IPlayerAttack
 {
     void DestoryThis();
-    IEnumerator StartAction(PlayerBase player, CharacterBase target);
+    IEnumerator StartAction(PlayerInstance player, CharacterInstance target);
 
 }

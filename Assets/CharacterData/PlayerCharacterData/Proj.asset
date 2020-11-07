@@ -21,9 +21,9 @@ MonoBehaviour:
   MAX_MP: 3
   HP: 10
   MP: 3
-  ATP: 1.977433
+  ATB: 0
   backRow: 0
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 667d47944916034409ba13e291e40057, type: 3}
   pos: {x: -10, y: -10}
   isEnemy: 0
   WHITE_LEVEL: 0

@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c9048c6594ccec4188acf06d28648d8, type: 3}
-  m_Name: Bat
+  m_Name: Hound
   m_EditorClassIdentifier: 
-  Name: Bat
-  Strength: 0
-  Agility: 1
+  Name: Hound
+  Strength: 1
+  Agility: 75
   Stamina: 0
   Magic: 0
   MAX_HP: 100
   MAX_MP: 0
-  HP: -252
+  HP: 10
   MP: 0
-  ATP: 16.844238
+  ATB: 0
   backRow: 0
-  sprite: {fileID: 0}
-  pos: {x: 0, y: 0}
+  sprite: {fileID: 21300000, guid: f6a71d39432d2ad40a45e22334ef4375, type: 3}
+  pos: {x: -5, y: 0}
   isEnemy: 0
   Attacks: 00000000

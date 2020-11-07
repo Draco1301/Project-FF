@@ -11,15 +11,21 @@ public class PlayerDisplay : MonoBehaviour
     [SerializeField] TextMeshProUGUI HP;
     [SerializeField] TextMeshProUGUI MP;
     [SerializeField] Image ATBmeter;
-    private PlayerBase p;
+    private PlayerInstance p;
 
-    public void setUp(PlayerBase p) {
+    public void setUp(PlayerInstance p) {
         this.p = p;
-        Name.text = p.name;
+        Name.text = p.Name;
         setHP(p.HP);
         setMP(p.MP);
-        setATB(p.ATP);
+        setATB(p.ATB);
 
+    }
+
+    private void Update() {
+        HP.text = p.HP.ToString();
+        MP.text = p.MP.ToString();
+        ATBmeter.fillAmount = p.ATB;
     }
 
     public void setHP(int h) {
