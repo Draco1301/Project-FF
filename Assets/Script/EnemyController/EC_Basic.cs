@@ -21,9 +21,19 @@ public class EC_Basic : MonoBehaviour, IEnemyController
         attack = GetComponent<IEnemyAttack>();
 
         players = BattleSystemManager.getPlayers();
-        while (targetPlayer == null || targetPlayer.HP == 0) {
-            targetPlayer = players[Random.Range(0, ei.Attacks.Length)];
+
+        for (int i=0; i<players.Count;i++) {
+            if (players[i].HP == 0) {
+                players.RemoveAt(i);
+                i--;
+            }
         }
+        if (players.Count == 0) {
+            return;
+        }
+
+        targetPlayer = players[Random.Range(0, players.Count)];
+        
 
         StartCoroutine(attack.StartAction(ei, targetPlayer));
 

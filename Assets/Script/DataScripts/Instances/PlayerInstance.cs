@@ -51,5 +51,20 @@ public class PlayerInstance : CharacterInstance
         transform.position = pos;
     }
 
+    public int GetCurrentJobLevel() {
+        switch (main_job) {
+            case Jobs.None:
+                return 0;
+            case Jobs.White:
+                return WHITE_LEVEL;
+            case Jobs.Black:
+                return BLACK_LEVEL;
+            case Jobs.Monk:
+                return MONK_LEVEL;
+            case Jobs.Knight:
+                return KNIGHT_LEVEL;
+        }
+        return 0;
+    }
 
 }

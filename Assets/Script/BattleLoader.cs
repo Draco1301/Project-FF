@@ -4,16 +4,35 @@ using UnityEngine;
 
 public class BattleLoader : MonoBehaviour
 {
+    public static BattleLoader instance;
+
     [SerializeField] PlayerInstance PlayerPrefab;
     [SerializeField] EnemyInstance EnemyPrefab;
 
+    //at the start character data transfers over
     [SerializeField] PlayerBase[] pb;
     [SerializeField] EnemyBase[] eb;
 
     private PlayerInstance[] players;
     private EnemyInstance[] enemy;
+    private Vector2[] enemyPos;
 
-    private void Awake() {
+    public static void setUpScene(PlayerBase[] p, EnemyBase[] e, Vector2[] pos) {
+        if (instance == null) {
+            BattleLoader[] bllist = GameObject.FindObjectsOfType<BattleLoader>();
+            instance = bllist[0];
+            for (int i=1; i<bllist.Length; i++) {
+                Destroy(bllist[i].gameObject);
+            }
+        }
+        instance.SetUpBattle(p,e,pos);
+    }
+
+    public void SetUpBattle(PlayerBase[] p, EnemyBase[] e, Vector2[] pos) {
+
+        pb = p;
+        eb = e;
+
         players = new PlayerInstance[pb.Length];
         enemy = new EnemyInstance[eb.Length];
 
@@ -28,9 +47,12 @@ public class BattleLoader : MonoBehaviour
         for (int i = 0; i < eb.Length; i++) {
             EnemyInstance ei = Instantiate(EnemyPrefab);
             ei.setData(eb[i]);
+            ei.pos = pos[i];
+            ei.transform.position = pos[i];
             enemy[i] = ei;
         }
 
         BattleSystemManager.setCharacters(enemy, players);
     }
+
 }

@@ -23,7 +23,7 @@ public class PA_Fight : MonoBehaviour, IPlayerAttack
         }
 
         BattleMessage.closeMessage();
-        BattleSystemManager.endAttack();
+        BattleSystemManager.endPlayerTurn();
         DestoryThis();
     }
 }

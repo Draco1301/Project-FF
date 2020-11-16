@@ -17,7 +17,7 @@ MonoBehaviour:
   Agility: 50
   Stamina: 5
   Magic: 1
-  MAX_HP: 10
+  MAX_HP: 19
   MAX_MP: 10
   HP: 19
   MP: 10
