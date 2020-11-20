@@ -7,16 +7,43 @@ public static class PlayerAttackIndex
     public static void getAttack(GameObject o, int i) {
         switch (i) {
             case 0:
-                //this one shouldn't really ever be called
                 o.AddComponent<PA_Fight>();
                 break;
             case 1:
-                o.AddComponent<EA_Bite>();
+                o.AddComponent<PA_Cure>();
                 break;
             case 2:
-                o.AddComponent<EA_Bite>();
+                o.AddComponent<PA_Revive>();
+                break;
+            case 3:
+                o.AddComponent<PA_CureAll>();
+                break;
+            case 4:
+                o.AddComponent<PA_Fire>();
+                break;
+            case 5:
+                o.AddComponent<PA_Fire2>();
+                break;
+            case 6:
+                o.AddComponent<PA_Fire3>();
+                break;
+            case 7:
+                o.AddComponent<PA_Focus>();
+                break;
+            case 8:
+                o.AddComponent<PA_Kick>();
+                break;
+            case 9:
+                o.AddComponent<PA_Counter>();
+                break;
+            case 10:
+                o.AddComponent<PA_Gaurd>();
+                break;
+            case 11:
+                o.AddComponent<PA_Strike>();
                 break;
             case 12:
+                o.AddComponent<PA_TwoHanded>();
                 break;
             default:
                 o.AddComponent<PA_Fight>();
@@ -25,37 +52,36 @@ public static class PlayerAttackIndex
 
     }
 
-    public static string getAttackName(GameObject o, int i) {
+    public static string getAttackName(int i) {
         switch (i) {
             case 0:
                 return "Fight";
             case 1:
-                return "Fight";
+                return "Cure";
             case 2:
-                return "Fight";
+                return "Revive";
             case 3:
-                return "Fight";
+                return "Cure All";
             case 4:
-                return "Fight";
+                return "Fire";
             case 5:
-                return "Fight";
+                return "Fire II";
             case 6:
-                return "Fight";
+                return "Fire III";
             case 7:
-                return "Fight";
+                return "Focus";
             case 8:
-                return "Fight";
+                return "Kick";
             case 9:
-                return "Fight";
+                return "Counter";
             case 10:
-                return "Fight";
+                return "Gaurd";
             case 11:
-                return "Fight";
+                return "Strike";
             case 12:
-                return "Fight";
+                return "Two Hands";
             default:
                 return "Fight";
         }
-        return "Error";
     }
 }

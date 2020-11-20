@@ -7,5 +7,8 @@ public interface IPlayerAttack
 {
     void DestoryThis();
     IEnumerator StartAction(PlayerInstance player, CharacterInstance target);
+    bool reqirementsMet();
+    TargetType getTargetType();
+
 
 }

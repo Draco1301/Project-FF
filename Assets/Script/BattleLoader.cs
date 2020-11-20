@@ -38,7 +38,7 @@ public class BattleLoader : MonoBehaviour
 
         for ( int i=0; i<pb.Length ;i++) {
             PlayerInstance pi = Instantiate(PlayerPrefab);
-            pi.setData(pb[i]);
+            pi.loadData(pb[i]);
             players[i] = pi;
             players[i].pos = new Vector2(3.5f, 2-1.2f*i);
             players[i].transform.position = players[i].pos;
@@ -49,6 +49,7 @@ public class BattleLoader : MonoBehaviour
             ei.setData(eb[i]);
             ei.pos = pos[i];
             ei.transform.position = pos[i];
+            ei.ATB = Random.Range(0f,1f);
             enemy[i] = ei;
         }
 

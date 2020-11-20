@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 public class CharacterDataTransfer : MonoBehaviour
 {
     private static CharacterDataTransfer instance;
-    [SerializeField] EnemyBase[] enemiesToTransfer;
-    [SerializeField] PlayerBase[] playersToTransfer;
-    [SerializeField] Vector2[] pos;
+    private EnemyBase[] enemiesToTransfer;
+    private PlayerBase[] playersToTransfer;
+    private Vector2[] pos;
 
     private void Awake() {
         if (instance == null) {
@@ -21,15 +21,10 @@ public class CharacterDataTransfer : MonoBehaviour
         }
     }
 
-    //private void Update() {
-    //    if (Input.GetKey(KeyCode.Q)) {
-    //        StartBattle();
-    //    }
-    //}
-
     public static void StartBattle(EnemyBase[] e, Vector2[] pos) {
         instance.enemiesToTransfer = e;
         instance.pos = pos;
+        instance.playersToTransfer = MainMenuScript.getPlayers();
         SceneManager.LoadScene("BattleScene");
     }
 

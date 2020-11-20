@@ -17,11 +17,8 @@ public class PlayerInstance : CharacterInstance
     public Jobs main_job;
     public Jobs sub_job;
 
-    public void setData(PlayerBase p) {
-        LoadData(p);
-    }
-
-    private void LoadData(PlayerBase p) {
+    public void loadData(PlayerBase p) {
+        pb = p;
         Name = p.name;
         Strength = p.Strength;
         Agility = p.Agility;
@@ -51,6 +48,17 @@ public class PlayerInstance : CharacterInstance
         transform.position = pos;
     }
 
+    public void saveData() {
+
+        pb.HP = HP;
+        pb.MP = MP;
+
+        pb.WHITE_LEVEL = WHITE_LEVEL;
+        pb.BLACK_LEVEL = BLACK_LEVEL;
+        pb.KNIGHT_LEVEL = KNIGHT_LEVEL;
+        pb.MONK_LEVEL = MONK_LEVEL;
+
+    }
     public int GetCurrentJobLevel() {
         switch (main_job) {
             case Jobs.None:
@@ -66,5 +74,30 @@ public class PlayerInstance : CharacterInstance
         }
         return 0;
     }
+
+    public void AddExpCurrentJobLevel(int i) {
+        switch (main_job) {
+            case Jobs.None:
+                break;
+            case Jobs.White:
+                WHITE_LEVEL += i;
+                Mathf.Clamp(WHITE_LEVEL, 0, 34);
+                break;
+            case Jobs.Black:
+                BLACK_LEVEL += i;
+                Mathf.Clamp(BLACK_LEVEL, 0, 34);
+                break;
+            case Jobs.Monk:
+                MONK_LEVEL += i;
+                Mathf.Clamp(MONK_LEVEL, 0, 34);
+                break;
+            case Jobs.Knight:
+                KNIGHT_LEVEL += i;
+                Mathf.Clamp(KNIGHT_LEVEL, 0, 34);
+                break;
+        }
+    }
+
+    public int focus = 0;
 
 }

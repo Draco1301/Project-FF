@@ -17,18 +17,20 @@ MonoBehaviour:
   Agility: 30
   Stamina: 0
   Magic: 0
-  MAX_HP: 10
-  MAX_MP: 3
-  HP: 10
-  MP: 3
+  MAX_HP: 50
+  MAX_MP: 20
+  HP: 50
+  MP: 20
   ATB: 0
   backRow: 0
-  sprite: {fileID: 21300000, guid: 667d47944916034409ba13e291e40057, type: 3}
+  sprite: {fileID: 21300000, guid: 9648c68e553e3984ca6008f6ef7ca8fc, type: 3}
   pos: {x: -10, y: -10}
   isEnemy: 0
-  WHITE_LEVEL: 0
-  BLACK_LEVEL: 0
-  KNIGHT_LEVEL: 0
-  MONK_LEVEL: 0
-  main_job: 0
+  WHITE_LEVEL: 40
+  BLACK_LEVEL: 40
+  KNIGHT_LEVEL: 40
+  MONK_LEVEL: 40
+  Level: 0
+  Exp: 0
+  main_job: 3
   sub_job: 0

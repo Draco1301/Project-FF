@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public enum Jobs { None, White, Black, Monk, Knight}
 public static class JobData 
@@ -59,7 +59,6 @@ public static class JobData
                 break;
         }
 
-
         attacks = new int[temp.Count];
         temp.CopyTo(attacks,0);
         return attacks;
@@ -74,7 +73,7 @@ public static class JobData
                 return "BLACK";
                 break;
             case Jobs.Monk:
-                return "FIST";
+                return "MONK";
                 break;
             case Jobs.Knight:
                 return "SWORD";
@@ -84,4 +83,6 @@ public static class JobData
                 break;
         }
     }
+
+    
 }

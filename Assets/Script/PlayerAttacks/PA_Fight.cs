@@ -9,14 +9,21 @@ public class PA_Fight : MonoBehaviour, IPlayerAttack
         Destroy(this);
     }
 
+    public bool reqirementsMet() {
+        return true;
+    }
+
+    public TargetType getTargetType() {
+        return TargetType.enemy;
+    }
     public IEnumerator StartAction(PlayerInstance player, CharacterInstance target) {
-        target.HP -= player.Strength;
+        target.HP -= 10;
         target.HP = Mathf.Clamp(target.HP, 0, target.MAX_HP);
-        BattleMessage.setMessage(player.Name + " Attacked " + target.Name);
+        BattleMessage.setMessage(player.Name + " attacked " + target.Name);
         BattleSystemManager.AttackInProgress = true;
 
         yield return new WaitForSeconds(1f); //this is for the animation
-        DamageDisplay.DisplayDamage(target, player.Strength);
+        DamageDisplay.DisplayDamage(target, 12);
 
         while (DamageDisplay.isDisplayingDamage) {
             yield return null;
@@ -26,4 +33,5 @@ public class PA_Fight : MonoBehaviour, IPlayerAttack
         BattleSystemManager.endPlayerTurn();
         DestoryThis();
     }
+
 }

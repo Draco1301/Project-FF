@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Hound
   Strength: 1
-  Agility: 75
+  Agility: 33
   Stamina: 0
   Magic: 0
   MAX_HP: 100
