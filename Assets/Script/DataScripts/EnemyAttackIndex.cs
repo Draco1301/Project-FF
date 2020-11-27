@@ -10,10 +10,10 @@ public static class EnemyAttackIndex
                 o.AddComponent<EA_Bite>();
                 break;
             case 1:
-                o.AddComponent<EA_Bite>();
+                o.AddComponent<EA_Gust>();
                 break;
             case 2:
-                o.AddComponent<EA_Bite>();
+                o.AddComponent<EA_Shock>();
                 break;
         }
     

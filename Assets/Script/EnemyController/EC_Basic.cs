@@ -19,7 +19,6 @@ public class EC_Basic : MonoBehaviour, IEnemyController
 
         EnemyAttackIndex.getAttack(this.gameObject, attackChoosen);
         attack = GetComponent<IEnemyAttack>();
-
         players = BattleSystemManager.getPlayers();
 
         for (int i=0; i<players.Count;i++) {

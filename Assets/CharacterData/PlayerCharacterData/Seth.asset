@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b72070ed70203f489286bc96b8f0e48, type: 3}
+  m_Name: Seth
+  m_EditorClassIdentifier: 
+  Name: Seth
+  Strength: 20
+  Agility: 20
+  Stamina: 20
+  Magic: 20
+  MAX_HP: 50
+  MAX_MP: 50
+  HP: 0
+  MP: 50
+  ATB: 0
+  backRow: 0
+  sprite: {fileID: 21300000, guid: 4e033ee42cf964e4abadc14e3f9a2f2a, type: 3}
+  pos: {x: 0, y: 0}
+  isEnemy: 0
+  WHITE_LEVEL: 32
+  BLACK_LEVEL: 32
+  KNIGHT_LEVEL: 32
+  MONK_LEVEL: 32
+  Bouns_Strength: 0
+  Bouns_Agility: 0
+  Bouns_Stamina: 0
+  Bouns_Magic: 0
+  job: 2
+  passiveAbility: -1
+  secondaryAbility: -1

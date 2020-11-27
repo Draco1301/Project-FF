@@ -17,17 +17,14 @@ public class PA_Focus : MonoBehaviour, IPlayerAttack
     }
 
     public IEnumerator StartAction(PlayerInstance player, CharacterInstance target) {
-        
-        BattleMessage.setMessage(player.Name + " increased their focus ");
         BattleSystemManager.AttackInProgress = true;
+        BattleMessage.setMessage(player.Name + " increased their focus ");
         player.focus += 1;
+        LeanAnimation.sideAnimation(player.gameObject, -0.2f);
+
 
         yield return new WaitForSeconds(1f); //this is for the animation
-        DamageDisplay.DisplayDamage(target, 12);
 
-        while (DamageDisplay.isDisplayingDamage) {
-            yield return null;
-        }
 
         BattleMessage.closeMessage();
         BattleSystemManager.endPlayerTurn();

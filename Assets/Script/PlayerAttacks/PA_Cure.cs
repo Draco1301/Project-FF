@@ -17,20 +17,18 @@ public class PA_Cure : MonoBehaviour, IPlayerAttack
     }
 
     public IEnumerator StartAction(PlayerInstance player, CharacterInstance target) {
-        target.HP += 10;
-        target.HP = Mathf.Clamp(target.HP, 0, target.MAX_HP);
-
-        BattleMessage.setMessage(player.Name + " cast CURE on " + target.Name);
         BattleSystemManager.AttackInProgress = true;
+        BattleMessage.setMessage(player.Name + " cast CURE on " + target.Name);
         player.MP -= 10;
+        int heal = player.Magic;
+        LeanAnimation.sideAnimation(player.gameObject, -0.2f);
 
-        yield return new WaitForSeconds(1f); //this is for the animation
 
-        DamageDisplay.DisplayDamage(target, 10);
-
-        while (DamageDisplay.isDisplayingDamage) {
-            yield return null;
+        IEnumerator loop = ((PlayerInstance)target).heal(heal);
+        while (loop.MoveNext()) {
+            yield return loop.Current;
         }
+
 
         BattleMessage.closeMessage();
         BattleSystemManager.endPlayerTurn();

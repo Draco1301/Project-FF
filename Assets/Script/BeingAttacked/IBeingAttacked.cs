@@ -10,7 +10,5 @@ public interface IBeingAttacked
 
     IEnumerator Action(CharacterInstance attacker);
 
-    bool hasAction();
 
-    bool IsActionActive();
 }

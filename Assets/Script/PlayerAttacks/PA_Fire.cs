@@ -17,17 +17,15 @@ public class PA_Fire : MonoBehaviour, IPlayerAttack
     }
 
     public IEnumerator StartAction(PlayerInstance player, CharacterInstance target) {
-        target.HP -= 12;
-        target.HP = Mathf.Clamp(target.HP, 0, target.MAX_HP);
-        BattleMessage.setMessage(player.Name + " cast FIRE on " + target.Name);
         BattleSystemManager.AttackInProgress = true;
+        BattleMessage.setMessage(player.Name + " cast FIRE on " + target.Name);
         player.MP -= 5;
+        LeanAnimation.sideAnimation(player.gameObject, -0.2f);
 
-        yield return new WaitForSeconds(1f); //this is for the animation
-        DamageDisplay.DisplayDamage(target, 12);
-
-        while (DamageDisplay.isDisplayingDamage) {
-            yield return null;
+        int damage = player.Magic;
+        IEnumerator damageEnumerator = ((EnemyInstance)target).takeDamage(damage, player);
+        while (damageEnumerator.MoveNext()) {
+            yield return damageEnumerator.Current;
         }
 
         BattleMessage.closeMessage();

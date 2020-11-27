@@ -13,24 +13,27 @@ MonoBehaviour:
   m_Name: Bartz
   m_EditorClassIdentifier: 
   Name: Bartz
-  Strength: 10
-  Agility: 50
-  Stamina: 5
-  Magic: 1
+  Strength: 20
+  Agility: 20
+  Stamina: 20
+  Magic: 20
   MAX_HP: 50
-  MAX_MP: 10
-  HP: 50
-  MP: 10
+  MAX_MP: 50
+  HP: 47
+  MP: 38
   ATB: 0
   backRow: 0
-  sprite: {fileID: 21300000, guid: fc085be125b43444d85343570552b836, type: 3}
+  sprite: {fileID: 21300000, guid: 4e033ee42cf964e4abadc14e3f9a2f2a, type: 3}
   pos: {x: 3.5, y: 1.8}
   isEnemy: 0
-  WHITE_LEVEL: 9
-  BLACK_LEVEL: 9
-  KNIGHT_LEVEL: 9
-  MONK_LEVEL: 9
-  Level: 0
-  Exp: 0
-  main_job: 4
-  sub_job: 0
+  WHITE_LEVEL: 32
+  BLACK_LEVEL: 32
+  KNIGHT_LEVEL: 32
+  MONK_LEVEL: 32
+  Bouns_Strength: 0
+  Bouns_Agility: 0
+  Bouns_Stamina: 0
+  Bouns_Magic: 0
+  job: 2
+  passiveAbility: -1
+  secondaryAbility: -1

@@ -1,15 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class JobMenu : MonoBehaviour
 {
-    [SerializeField] Button[] buttons;
-    [SerializeField] Image background;
+    public Button[] buttons;
     PlayerInstance player;
     int[] attacks;
+    bool[] castable = new bool[8];
     public bool IsOpen;
 
     public void setUp(PlayerInstance p) {
@@ -17,12 +15,14 @@ public class JobMenu : MonoBehaviour
         player = p;
         attacks = JobData.getJobAttacks(player.main_job, player.GetCurrentJobLevel());
         setEnableMenu(true);
-        for (int i=0; i < attacks.Length ;i++) {
+        for (int i = 0; i < attacks.Length; i++) {
             buttons[i].gameObject.SetActive(true);
             buttons[i].GetComponentInChildren<TextMeshProUGUI>().SetText(PlayerAttackIndex.getAttackName(attacks[i]));
-            buttons[i].interactable = isCastable(p.gameObject, attacks[i]);
+            castable[i] = isCastable(p.gameObject, attacks[i]);
+            buttons[i].interactable = castable[i];
         }
         cleanUp(p);
+
     }
 
     public void setAttack(int i) {
@@ -34,11 +34,18 @@ public class JobMenu : MonoBehaviour
     public void setShowMenu(bool b) {
         IsOpen = b;
         this.gameObject.SetActive(b);
+        if (IsOpen) {
+            LeanAnimation.OpenUI(this.gameObject);
+        }
     }
 
     public void setEnableMenu(bool b) {
         for (int i = 0; i < attacks.Length; i++) {
-            buttons[i].interactable = b;
+            if (b) {
+                buttons[i].interactable = castable[i];
+            } else {
+                buttons[i].interactable = false;
+            }
         }
     }
 
@@ -50,10 +57,9 @@ public class JobMenu : MonoBehaviour
         }
     }
 
-    public bool isCastable(GameObject p, int i) {
+    public bool isCastable(GameObject p, int attackNumber) {
 
-        PlayerAttackIndex.getAttack(p, i);
-        IPlayerAttack temp = p.GetComponent<IPlayerAttack>();
+        IPlayerAttack temp = PlayerAttackIndex.getAttack(p, attackNumber);
         bool b = temp.reqirementsMet();
         temp.DestoryThis();
         return b;

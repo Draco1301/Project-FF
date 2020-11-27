@@ -17,17 +17,16 @@ public class PA_Fight : MonoBehaviour, IPlayerAttack
         return TargetType.enemy;
     }
     public IEnumerator StartAction(PlayerInstance player, CharacterInstance target) {
-        target.HP -= 10;
-        target.HP = Mathf.Clamp(target.HP, 0, target.MAX_HP);
-        BattleMessage.setMessage(player.Name + " attacked " + target.Name);
         BattleSystemManager.AttackInProgress = true;
+        BattleMessage.setMessage(player.Name + " attacked " + target.Name);
+        LeanAnimation.sideAnimation(player.gameObject, -0.2f);
 
-        yield return new WaitForSeconds(1f); //this is for the animation
-        DamageDisplay.DisplayDamage(target, 12);
-
-        while (DamageDisplay.isDisplayingDamage) {
-            yield return null;
+        int damage = player.Strength / 2;
+        IEnumerator damageEnumerator = ((EnemyInstance)target).takeDamage(damage, player);
+        while (damageEnumerator.MoveNext()) {
+            yield return damageEnumerator.Current;
         }
+
 
         BattleMessage.closeMessage();
         BattleSystemManager.endPlayerTurn();

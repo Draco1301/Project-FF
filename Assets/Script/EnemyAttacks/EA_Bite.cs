@@ -8,24 +8,16 @@ public class EA_Bite : MonoBehaviour, IEnemyAttack
         Destroy(this);
     }
 
-    public IEnumerator StartAction(EnemyInstance enemy, CharacterInstance target) {
+    public IEnumerator StartAction(EnemyInstance enemy, PlayerInstance target) {
         BattleSystemManager.AttackInProgress = true;
         BattleMessage.setMessage(enemy.Name + " Attacked " + target.Name);
+        LeanAnimation.sideAnimation(enemy.gameObject, 0.2f);
         int damage = enemy.Strength;
 
-        IBeingAttacked IBA = target.GetComponent<IBeingAttacked>();
-        if (IBA != null) {
-            damage = IBA.DamageChange(damage);
-            if (IBA.hasAction()) {
-                StartCoroutine(IBA.Action(enemy));
-            }
-            while (IBA.IsActionActive()) {
-                yield return null;
-            }
+        IEnumerator damageEnumerator = target.takeDamage(damage, enemy);
+        while (damageEnumerator.MoveNext()) {
+            yield return damageEnumerator.Current;
         }
-
-        target.HP -= damage;
-        target.HP = Mathf.Clamp(target.HP, 0, target.MAX_HP);
 
         yield return new WaitForSeconds(1f);
 

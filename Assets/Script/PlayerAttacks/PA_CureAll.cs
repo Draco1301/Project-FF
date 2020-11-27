@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PA_CureAll : MonoBehaviour
+public class PA_CureAll : MonoBehaviour, IPlayerAttack
 {
     public void DestoryThis() {
         Destroy(this);
@@ -17,28 +17,30 @@ public class PA_CureAll : MonoBehaviour
     }
 
     public IEnumerator StartAction(PlayerInstance player, CharacterInstance target) {
-        
-        foreach (PlayerInstance pi in BattleSystemManager.getPlayers()) {
-            pi.HP += 12;
-            pi.HP = Mathf.Clamp(pi.HP, 0, pi.MAX_HP);
-        }
-
-        BattleMessage.setMessage(player.Name + " cast CURE on the whole party");
         BattleSystemManager.AttackInProgress = true;
+        BattleMessage.setMessage(player.Name + " cast CURE on the whole party");
         player.MP -= 20;
+        LeanAnimation.sideAnimation(player.gameObject, -0.2f);
 
-        yield return new WaitForSeconds(1f); //this is for the animation
 
-        foreach (PlayerInstance pi in BattleSystemManager.getPlayers()) {
-            DamageDisplay.DisplayDamage(pi, 12);
+        int heal = player.Magic / 2;
+        IEnumerator damageEnumerator = ((PlayerInstance)target).heal(heal);
+        while (damageEnumerator.MoveNext()) {
+            yield return damageEnumerator.Current;
         }
 
-        while (DamageDisplay.isDisplayingDamage) {
-            yield return null;
-        }
 
         BattleMessage.closeMessage();
         BattleSystemManager.endPlayerTurn();
         DestoryThis();
+    }
+
+    bool MoveNext(List<IEnumerator> damageEnumerator, List<bool> bools) {
+        bool b = false;
+        for (int i = 0; i < damageEnumerator.Count; i++) {
+            bools[i] = damageEnumerator[i].MoveNext();
+            b = b || bools[i];
+        }
+        return b;
     }
 }

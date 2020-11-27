@@ -13,25 +13,22 @@ public class PA_Fire3 : MonoBehaviour, IPlayerAttack
     }
 
     public bool reqirementsMet() {
-        return BattleSystemManager.currentPlayersTurn.MP >= 8;
+        return BattleSystemManager.currentPlayersTurn.MP >= BattleSystemManager.currentPlayersTurn.MAX_MP/4;
     }
 
     public IEnumerator StartAction(PlayerInstance player, CharacterInstance target) {
-
-        target.HP -= 9999;
-        target.HP = Mathf.Clamp(target.HP, 0, target.MAX_HP);
-
-        BattleMessage.setMessage(player.Name + " cast FIRE III on " + target.Name);
         BattleSystemManager.AttackInProgress = true;
-        player.MP = 0;
+        BattleMessage.setMessage(player.Name + " cast FIRE III on " + target.Name);
+        player.MP -= player.MAX_MP/4;
+        LeanAnimation.sideAnimation(player.gameObject, -0.2f);
 
-        yield return new WaitForSeconds(1f); //this is for the animation
 
-        DamageDisplay.DisplayDamage(target, 9999);
-
-        while (DamageDisplay.isDisplayingDamage) {
-            yield return null;
+        int damage = player.Magic * 3;
+        IEnumerator damageEnumerator = ((EnemyInstance)target).takeDamage(damage, player);
+        while (damageEnumerator.MoveNext()) {
+            yield return damageEnumerator.Current;
         }
+
 
         BattleMessage.closeMessage();
         BattleSystemManager.endPlayerTurn();

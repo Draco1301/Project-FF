@@ -36,6 +36,7 @@ public class VictoryManager : MonoBehaviour
             p[i].AddExpCurrentJobLevel(2);
             p[i].saveData();
         }
+        InventoryInstance.instacne.saveData();
 
         instance.StartCoroutine(BattleMessage.displayBattleResults(logs));
     }

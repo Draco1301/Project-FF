@@ -21,12 +21,12 @@ public class PA_Gaurd : MonoBehaviour, IPlayerAttack
         BattleMessage.setMessage(player.Name + " prepaired to defend ");
         BattleSystemManager.AttackInProgress = true;
         player.gameObject.AddComponent<BA_Gaurd>();
+        LeanAnimation.sideAnimation(player.gameObject, -0.2f);
+
+
 
         yield return new WaitForSeconds(1f); //this is for the animation
 
-        while (DamageDisplay.isDisplayingDamage) {
-            yield return null;
-        }
 
         BattleMessage.closeMessage();
         BattleSystemManager.endPlayerTurn();

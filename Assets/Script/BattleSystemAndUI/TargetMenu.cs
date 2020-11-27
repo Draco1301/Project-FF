@@ -9,9 +9,10 @@ public class TargetMenu : MonoBehaviour
 {
 
     private int nextButtonIndex = 0;
-    private Button[] targets = new Button[10];
+    public Button[] targets = new Button[10];
     [SerializeField] ActionMenu actionMenu;
     [SerializeField] Button btn_prefab;
+    public bool IsOpen;
 
     private void Awake() {
         for (int i=0; i< targets.Length; i++) {
@@ -22,7 +23,7 @@ public class TargetMenu : MonoBehaviour
 
     public void SetUp(List<EnemyInstance> eb, List<PlayerInstance> pb, PlayerInstance player, TargetType t) {
         this.gameObject.SetActive(true);
-
+        IsOpen = true;
         if (t == TargetType.party || t == TargetType.partyMember) {
             foreach (PlayerInstance p in pb) {
                 Vector2 pos = Camera.main.WorldToScreenPoint(p.pos);
@@ -31,7 +32,7 @@ public class TargetMenu : MonoBehaviour
 
                 Button b = getNextButton();
                 b.GetComponent<RectTransform>().localPosition = pos;
-                b.onClick.AddListener(delegate { actionMenu.setTarget(p); turnOff(); });
+                b.onClick.AddListener(delegate { actionMenu.setTarget(p); turnOff(); UIAudioManager.Select(); });
             }
         } else if (t == TargetType.enemy || t == TargetType.enemies) {
             foreach (EnemyInstance e in eb) {
@@ -41,7 +42,7 @@ public class TargetMenu : MonoBehaviour
 
                 Button b = getNextButton();
                 b.GetComponent<RectTransform>().localPosition = pos;
-                b.onClick.AddListener(delegate { actionMenu.setTarget(e); turnOff(); });
+                b.onClick.AddListener(delegate { actionMenu.setTarget(e); turnOff(); UIAudioManager.Select(); });
             }
         } else if (t == TargetType.self) {
             Vector2 pos = Camera.main.WorldToScreenPoint(player.pos);
@@ -50,12 +51,13 @@ public class TargetMenu : MonoBehaviour
 
             Button b = getNextButton();
             b.GetComponent<RectTransform>().localPosition = pos;
-            b.onClick.AddListener(delegate { actionMenu.setTarget(player); turnOff(); });
+            b.onClick.AddListener(delegate { actionMenu.setTarget(player); turnOff(); UIAudioManager.Select(); });
         }
     }
 
     private void Update() {
         if (BattleSystemManager.AttackInProgress == targets[0].IsActive() ) {
+
             for (int i = 0; i < nextButtonIndex; i++) {
                 targets[i].gameObject.SetActive(!BattleSystemManager.AttackInProgress);
             }
@@ -64,6 +66,7 @@ public class TargetMenu : MonoBehaviour
 
     public void turnOff() {
         resetAllButtons();
+        IsOpen = false;
         this.gameObject.SetActive(false);
     }
 
@@ -75,8 +78,10 @@ public class TargetMenu : MonoBehaviour
     private void resetAllButtons() {
         nextButtonIndex = 0;
         for (int i = 0; i < targets.Length; i++) {
-            targets[i].gameObject.SetActive(false);
-            targets[i].onClick.RemoveAllListeners();
+            if (targets[i] != null) {
+                targets[i].gameObject.SetActive(false);
+                targets[i].onClick.RemoveAllListeners();
+            }
         }
     }
 }

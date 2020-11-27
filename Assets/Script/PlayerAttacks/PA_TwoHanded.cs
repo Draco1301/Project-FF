@@ -17,19 +17,16 @@ public class PA_TwoHanded : MonoBehaviour, IPlayerAttack
     }
 
     public IEnumerator StartAction(PlayerInstance player, CharacterInstance target) {
-
-        target.HP -= player.Strength * 2;
-        target.HP = Mathf.Clamp(target.HP, 0, target.MAX_HP);
-        player.MP -= 8;
-
-        BattleMessage.setMessage("TWO HANDED");
         BattleSystemManager.AttackInProgress = true;
+        BattleMessage.setMessage("TWO HANDED");
+        player.MP -= 8;
+        LeanAnimation.sideAnimation(player.gameObject, -0.2f);
 
-        yield return new WaitForSeconds(1f); //this is for the animation
-        DamageDisplay.DisplayDamage(target, 12);
 
-        while (DamageDisplay.isDisplayingDamage) {
-            yield return null;
+        int damage = player.Strength * 2;
+        IEnumerator damageEnumerator = ((EnemyInstance)target).takeDamage(damage, player);
+        while (damageEnumerator.MoveNext()) {
+            yield return damageEnumerator.Current;
         }
 
         BattleMessage.closeMessage();

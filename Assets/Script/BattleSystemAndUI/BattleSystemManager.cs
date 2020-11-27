@@ -19,8 +19,8 @@ public class BattleSystemManager : MonoBehaviour
     [SerializeField] GameObject Pnl_Main;
     [SerializeField] PlayerDisplay pdisplayPrefab;
 
-    private bool isGameOver = false;
-    private bool isVictory = false;
+    public bool isGameOver = false;
+    public bool isVictory = false;
 
     private void Awake() {
         if (instance == null) {

@@ -5,5 +5,5 @@ using UnityEngine;
 public interface IEnemyAttack
 {
     void DestoryThis();
-    IEnumerator StartAction(EnemyInstance enemy, CharacterInstance target);
+    IEnumerator StartAction(EnemyInstance enemy, PlayerInstance target);
 }

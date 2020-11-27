@@ -4,51 +4,53 @@ using UnityEngine;
 
 public static class PlayerAttackIndex
 {
-    public static void getAttack(GameObject o, int i) {
+    public static IPlayerAttack getAttack(GameObject o, int i) {
+        IPlayerAttack temp;
         switch (i) {
             case 0:
-                o.AddComponent<PA_Fight>();
+                temp = o.AddComponent<PA_Fight>();
                 break;
             case 1:
-                o.AddComponent<PA_Cure>();
+                temp = o.AddComponent<PA_Cure>();
                 break;
             case 2:
-                o.AddComponent<PA_Revive>();
+                temp = o.AddComponent<PA_Revive>();
                 break;
             case 3:
-                o.AddComponent<PA_CureAll>();
+                temp = o.AddComponent<PA_CureAll>();
                 break;
             case 4:
-                o.AddComponent<PA_Fire>();
+                temp = o.AddComponent<PA_Fire>();
                 break;
             case 5:
-                o.AddComponent<PA_Fire2>();
+                temp = o.AddComponent<PA_Fire2>();
                 break;
             case 6:
-                o.AddComponent<PA_Fire3>();
+                temp = o.AddComponent<PA_Fire3>();
                 break;
             case 7:
-                o.AddComponent<PA_Focus>();
+                temp = o.AddComponent<PA_Focus>();
                 break;
             case 8:
-                o.AddComponent<PA_Kick>();
+                temp = o.AddComponent<PA_Kick>();
                 break;
             case 9:
-                o.AddComponent<PA_Counter>();
+                temp = o.AddComponent<PA_Counter>();
                 break;
             case 10:
-                o.AddComponent<PA_Gaurd>();
+                temp = o.AddComponent<PA_Gaurd>();
                 break;
             case 11:
-                o.AddComponent<PA_Strike>();
+                temp = o.AddComponent<PA_Strike>();
                 break;
             case 12:
-                o.AddComponent<PA_TwoHanded>();
+                temp = o.AddComponent<PA_TwoHanded>();
                 break;
             default:
-                o.AddComponent<PA_Fight>();
+                temp = o.AddComponent<PA_Fight>();
                 break;
         }
+        return temp;
 
     }
 

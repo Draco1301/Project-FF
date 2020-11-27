@@ -13,24 +13,27 @@ MonoBehaviour:
   m_Name: Proj
   m_EditorClassIdentifier: 
   Name: Proj
-  Strength: 1
-  Agility: 30
-  Stamina: 0
-  Magic: 0
+  Strength: 20
+  Agility: 20
+  Stamina: 20
+  Magic: 20
   MAX_HP: 50
-  MAX_MP: 20
-  HP: 50
-  MP: 20
+  MAX_MP: 50
+  HP: 0
+  MP: 50
   ATB: 0
   backRow: 0
   sprite: {fileID: 21300000, guid: 9648c68e553e3984ca6008f6ef7ca8fc, type: 3}
   pos: {x: -10, y: -10}
   isEnemy: 0
-  WHITE_LEVEL: 40
-  BLACK_LEVEL: 40
-  KNIGHT_LEVEL: 40
-  MONK_LEVEL: 40
-  Level: 0
-  Exp: 0
-  main_job: 3
-  sub_job: 0
+  WHITE_LEVEL: 32
+  BLACK_LEVEL: 32
+  KNIGHT_LEVEL: 32
+  MONK_LEVEL: 32
+  Bouns_Strength: 0
+  Bouns_Agility: 0
+  Bouns_Stamina: 0
+  Bouns_Magic: 0
+  job: 3
+  passiveAbility: -1
+  secondaryAbility: -1

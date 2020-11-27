@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c9048c6594ccec4188acf06d28648d8, type: 3}
+  m_Name: Witch
+  m_EditorClassIdentifier: 
+  Name: Witch
+  Strength: 30
+  Agility: 20
+  Stamina: 30
+  Magic: 45
+  MAX_HP: 50
+  MAX_MP: 0
+  HP: 50
+  MP: 0
+  ATB: 0
+  backRow: 0
+  sprite: {fileID: 21300000, guid: fed7c401838433f40a2c5c1156731f5a, type: 3}
+  pos: {x: 0, y: 0}
+  isEnemy: 0
+  Attacks: 0100000002000000

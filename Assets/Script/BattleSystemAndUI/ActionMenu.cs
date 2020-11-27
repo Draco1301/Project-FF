@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +18,8 @@ public class ActionMenu : MonoBehaviour
     private Coroutine action;
     [SerializeField] TargetMenu targetMenu;
     [SerializeField] JobMenu jobMenu;
+    [SerializeField] ItemMenu itemMenu;
+    public static bool IsOpen;
 
     private void Awake() {
         if (instance == null) {
@@ -29,12 +30,11 @@ public class ActionMenu : MonoBehaviour
     }
 
     public void setUp(PlayerInstance p) {
+        LeanAnimation.OpenUI(this.gameObject);
         player = p;
         if (player.HP <= 0) {
             return;
         }
-
-
         showMenu();
 
         Job.GetComponentInChildren<Text>().text = JobData.getJobName(p.main_job);
@@ -48,17 +48,25 @@ public class ActionMenu : MonoBehaviour
             Job.GetComponent<Image>().enabled = true;
             Job.GetComponentInChildren<Text>().enabled = true;
         }
-        Ability.GetComponentInChildren<Text>().text = JobData.getJobName(p.sub_job);
-        if (p.sub_job == Jobs.None) {
+        if (p.secondaryAbility == -1) {
             Ability.enabled = false;
             Ability.GetComponent<Image>().enabled = false;
             Ability.GetComponentInChildren<Text>().enabled = false;
         } else {
             //Assign job ability menu to the button 
+            Ability.enabled = true;
+            Ability.GetComponent<Image>().enabled = true;
+            Ability.GetComponentInChildren<Text>().enabled = true;
+            Ability.GetComponentInChildren<Text>().text = PlayerAttackIndex.getAttackName(p.secondaryAbility);
+            Ability.onClick.AddListener(delegate { playerAttack = PlayerAttackIndex.getAttack(p.gameObject,p.secondaryAbility); StartAction(); });
+
         }
         //Assign job ability menu to the button 
         Fight.onClick.AddListener(delegate { playerAttack = gameObject.AddComponent<PA_Fight>(); StartAction(); });
+
         //assign item to open item menu
+        itemMenu.setUp();
+
     }
 
     private void Update() {
@@ -70,6 +78,9 @@ public class ActionMenu : MonoBehaviour
                 if (jobMenu.IsOpen) {
                     jobMenu.setEnableMenu(true);
                 }
+                if (itemMenu.IsOpen) {
+                    itemMenu.setEnableMenu(true);
+                }
                 StopCoroutine(action);
                 playerAttack.DestoryThis();
                 playerAttack = null;
@@ -77,7 +88,9 @@ public class ActionMenu : MonoBehaviour
                 setEnableMenu(true);
             } else if (jobMenu.IsOpen) {
                 jobMenu.setShowMenu(false);
-            } 
+            } else if (itemMenu.IsOpen) {
+                itemMenu.setShowMenu(false);
+            }
         }
     }
 
@@ -108,6 +121,9 @@ public class ActionMenu : MonoBehaviour
         if (jobMenu.IsOpen) {
             jobMenu.setShowMenu(false);
         }
+        if (itemMenu.IsOpen) {
+            itemMenu.setShowMenu(false);
+        }
         player = null;
         playerAttack = null;
     }
@@ -124,6 +140,7 @@ public class ActionMenu : MonoBehaviour
 
 
     private void hideMenu() {
+        IsOpen = false;
         this.GetComponent<Image>().enabled = false;
 
         Fight.onClick.RemoveAllListeners();
@@ -143,6 +160,7 @@ public class ActionMenu : MonoBehaviour
     }
 
     private void showMenu() {
+        IsOpen = true;
         setEnableMenu(true);
         this.GetComponent<Image>().enabled = true;
         Fight.gameObject.SetActive(true);

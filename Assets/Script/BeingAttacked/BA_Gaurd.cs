@@ -32,12 +32,4 @@ public class BA_Gaurd : MonoBehaviour, IBeingAttacked
     public int DamageChange(float damage) {
         return 0;
     }
-
-    public bool hasAction() {
-        return true;
-    }
-
-    public bool IsActionActive() {
-        return actionActive;
-    }
 }

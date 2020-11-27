@@ -21,12 +21,10 @@ public class PA_Counter : MonoBehaviour, IPlayerAttack
         BattleMessage.setMessage(player.Name + " prepares their stance");
         BattleSystemManager.AttackInProgress = true;
         player.gameObject.AddComponent<BA_Counter>();
+        LeanAnimation.sideAnimation(player.gameObject, -0.2f);
+
 
         yield return new WaitForSeconds(1f); //this is for the animation
-
-        while (DamageDisplay.isDisplayingDamage) {
-            yield return null;
-        }
 
         BattleMessage.closeMessage();
         BattleSystemManager.endPlayerTurn();
